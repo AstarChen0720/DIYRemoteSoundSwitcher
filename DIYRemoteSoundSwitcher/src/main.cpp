@@ -76,8 +76,8 @@ void loop() {
 
     // 2. 檢查 IR（紅外線對講機）
     if (IrReceiver.decode()) {
-        // 確保地址是我們設定的 0x00，避免被隔壁電視遙控器干擾
-        if (IrReceiver.decodedIRData.address == 0x00) {
+        // 確保不是雜訊 (UNKNOWN)，且地址是我們設定的 0x00
+        if (IrReceiver.decodedIRData.protocol != UNKNOWN && IrReceiver.decodedIRData.address == 0x00) {
             uint16_t command = IrReceiver.decodedIRData.command;
             
             // 根據發射端定義的 0x01 ~ 0x04 進行動作轉換
